@@ -17,8 +17,9 @@ Once the application is running, you can access it at `http://localhost:3000` in
 
 Here are some screenshots of the application in action:
 
-![Screenshot 1](screenshots/chat-app-1.png)
-![Screenshot 2](screenshots/chat-app-2.png)
+
+<img src="screenshots/chat-app-1.png" width="300" height="300">
+<img src="screenshots/chat-app-2.png" width="600" height="400">
 
 
 ## Technologies Used
