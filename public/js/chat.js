@@ -15,7 +15,7 @@ const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 
 // Options
 const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
+  ignoreQueryPrefix: true, // 忽略問號
 });
 
 socket.emit("join", { username, room }, (error) => {
@@ -37,6 +37,25 @@ $messageForm.addEventListener("submit", (e) => {
     $messageFormInput.value = ""; // 清空搜尋列
     $messageFormInput.focus(); // 讓重點回到輸入欄位
     $messageFormButton.removeAttribute("disabled");
+  });
+});
+
+$sendLocationButton.addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    return alert("Geolocation is not support by your browser.");
+  }
+  // 按過之後先反白，不能按，等處理完再允許
+  $sendLocationButton.setAttribute("disabled", "disabled");
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const location = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    };
+    socket.emit("sendLocation", location, (status) => {
+      console.log(status);
+      $sendLocationButton.removeAttribute("disabled"); // 發送完才允許繼續按
+    });
   });
 });
 
@@ -70,21 +89,3 @@ socket.on("roomData", ({ room, users }) => {
   $sidebar.innerHTML = html;
 });
 
-$sendLocationButton.addEventListener("click", () => {
-  if (!navigator.geolocation) {
-    return alert("Geolocation is not support by your browser.");
-  }
-  // 按過之後先反白，不能按，等處理完再允許
-  $sendLocationButton.setAttribute("disabled", "disabled");
-
-  navigator.geolocation.getCurrentPosition((position) => {
-    const location = {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    };
-    socket.emit("sendLocation", location, (status) => {
-      console.log(status);
-      $sendLocationButton.removeAttribute("disabled"); // 發送完才允許繼續按
-    });
-  });
-});

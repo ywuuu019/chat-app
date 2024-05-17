@@ -53,14 +53,6 @@ const getUsersInRoom = (room) => {
   });
 };
 
-// console.log(addUser({ id: 1, username: "Amy", room: "Work" }));
-// console.log(addUser({ id: 10, username: "Cindy  ", room: "Work" }));
-// console.log(addUser({ id: 10, username: "Beddy  ", room: "Child" }));
-// console.log(removeUser(11));
-// console.log(getUser(1));
-// console.log(getUsersInRoom("Work"));
-// console.log("User List:", users);
-
 module.exports = {
   addUser,
   removeUser,
